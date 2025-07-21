@@ -1,0 +1,52 @@
+﻿@model CreditCalculator.Models.ResultViewModel
+
+@{
+    ViewData["Title"] = "Результаты расчёта";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-success text-white text-center rounded-top-4">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered align-middle">
+                            <thead class="table-light text-center">
+                            <tr>
+                                <th scope="col">№ платежа</th>
+                                <th scope="col">Дата платежа</th>
+                                <th scope="col">Размер платежа по телу</th>
+                                <th scope="col">Размер платежа по %</th>
+                                <th scope="col">Остаток основного долга</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var payment in Model.Payments)
+                            {
+                                <tr>
+                                    <td class="text-center align-middle">@payment.Number</td>
+                                    <td class="text-center align-middle">@payment.Date.ToString("dd.MM.yyyy")</td>
+                                    <td class="text-center align-middle">@payment.Principal.ToString("C")</td>
+                                    <td class="text-center align-middle">@payment.Interest.ToString("C")</td>
+                                    <td class="text-center align-middle">@payment.RemainingDebt.ToString("C")</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <h5 class="mb-0">Общая переплата: <strong>@Model.Overpayment.ToString("C")</strong></h5>
+                    </div>
+
+                    <div class="d-grid mt-3">
+                        <a class="btn btn-outline-primary btn-lg" asp-action="Index">← Вернуться к калькулятору</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

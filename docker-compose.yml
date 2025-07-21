@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  creditcalculator:
+    build:
+      context: .
+      dockerfile: CreditCalculator/Dockerfile
+    ports:
+      - "8181:8080"
