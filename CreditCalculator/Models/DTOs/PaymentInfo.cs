@@ -7,5 +7,6 @@ namespace CreditCalculator.Models
         public decimal Principal { get; set; }
         public decimal Interest { get; set; }
         public decimal RemainingDebt { get; set; }
+        public decimal Payment { get; set; }
     }
 }

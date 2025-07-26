@@ -14,7 +14,7 @@ namespace CreditCalculator.Controllers
         /// <summary>
         /// Конструктор с внедрением зависимости сервиса расчета кредита.
         /// </summary>
-        /// <param name="creditCalculator">Реализация интерфейса ILoanCalculator</param>
+        /// <param name="creditCalculator">Реализация интерфейса IСreditCalculator</param>
         public CreditController(ICreditCalculator creditCalculator)
         {
             _creditCalculator = creditCalculator;

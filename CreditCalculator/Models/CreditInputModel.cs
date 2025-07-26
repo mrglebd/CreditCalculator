@@ -14,16 +14,10 @@ namespace CreditCalculator.Models
         [Display(Name = "Тип процентной ставки")]
         public InterestRateType? RateType { get; set; }
 
-        private decimal _loanAmount;
-
         [Required(ErrorMessage = "Сумма займа обязательна")]
         [Range(1, 100_000_000, ErrorMessage = "Сумма должна быть от 1 до 100 000 000")]
         [Display(Name = "Сумма займа")]
-        public decimal LoanAmount
-        {
-            get => _loanAmount;
-            set => _loanAmount = decimal.Round(value, 2);
-        }
+        public decimal LoanAmount { get; set; }
 
         [Display(Name = "Срок займа (в месяцах)")]
         public int? LoanTermMonths { get; set; }

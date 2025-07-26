@@ -9,12 +9,14 @@ CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
 CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
 // Services
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ICreditCalculator, CreditCalculator.Services.CreditCalculator>();
 builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
 });
+builder.Services.AddScoped<ICreditCalculator, CreditCalculator.Services.CreditCalculator>();
+builder.Services.AddScoped<IRepaymentScheduleCalculator, AnnualScheduleCalculator>();
+builder.Services.AddScoped<IRepaymentScheduleCalculator, DailyScheduleCalculator>();
+
 
 var app = builder.Build();
 
