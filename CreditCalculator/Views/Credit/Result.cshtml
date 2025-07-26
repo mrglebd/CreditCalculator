@@ -18,6 +18,7 @@
                             <tr>
                                 <th scope="col">№ платежа</th>
                                 <th scope="col">Дата платежа</th>
+                                <th scope="col">Сумма платежа</th>
                                 <th scope="col">Размер платежа по телу</th>
                                 <th scope="col">Размер платежа по %</th>
                                 <th scope="col">Остаток основного долга</th>
@@ -29,6 +30,7 @@
                                 <tr>
                                     <td class="text-center align-middle">@payment.Number</td>
                                     <td class="text-center align-middle">@payment.Date.ToString("dd.MM.yyyy")</td>
+                                    <td class="text-center align-middle">@payment.Payment.ToString("C")</td>
                                     <td class="text-center align-middle">@payment.Principal.ToString("C")</td>
                                     <td class="text-center align-middle">@payment.Interest.ToString("C")</td>
                                     <td class="text-center align-middle">@payment.RemainingDebt.ToString("C")</td>
