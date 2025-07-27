@@ -1,5 +1,3 @@
-using CreditCalculator.Models;
-
 namespace CreditCalculator.Models
 {
     public class ResultViewModel

@@ -23,13 +23,13 @@ namespace CreditCalculator.Models
         public int? LoanTermMonths { get; set; }
 
         [Display(Name = "Годовая процентная ставка")]
-        public double? AnnualInterestRate { get; set; }
+        public decimal? AnnualInterestRate { get; set; }
 
         [Display(Name = "Срок займа (в днях)")]
         public int? LoanTermDays { get; set; }
 
         [Display(Name = "Ставка в день")] 
-        public double? DailyInterestRate { get; set; }
+        public decimal? DailyInterestRate { get; set; }
 
         [Display(Name = "Шаг платежа (в днях)")]
         public int? PaymentStepDays { get; set; }

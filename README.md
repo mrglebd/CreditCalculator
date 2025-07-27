@@ -21,27 +21,35 @@ CreditCalculator — это веб-приложение для расчета к
 - **wwwroot**  
   Статические файлы (CSS, JS, библиотеки).
 
+- **CreditCalculator.Tests**  
+  Отдельный проект с unit-тестами, покрывающими основную бизнес-логику по расчету графика платежей.
+
 ## Запуск проекта
 
 ### Требования
-- .NET 6.0 или новее
+
+- .NET 8.0 SDK
 - Docker (опционально, если хотите запускать через контейнер)
 
-### Сборка и запуск
+---
+
+### Сборка и запуск локально
 
 ```sh
 # Восстановление зависимостей
- dotnet restore CreditCalculator/CreditCalculator.csproj
+dotnet restore
 
 # Сборка проекта
- dotnet build CreditCalculator/CreditCalculator.csproj
+dotnet build
 
-# Запуск в режиме разработки с hot-reload
- dotnet watch --project CreditCalculator run
-
-# Запуск в Production-сборке
- dotnet run --project CreditCalculator
+# Запуск веб-приложения
+dotnet run --project CreditCalculator
 ```
+
+Приложение будет доступно по адресу:  
+http://localhost:5142 (или порту, указанному в `launchSettings.json`)
+
+---
 
 ### Запуск через Docker
 
@@ -49,32 +57,59 @@ CreditCalculator — это веб-приложение для расчета к
 # Сборка Docker-образа
 docker build -t credit-calculator ./CreditCalculator
 
-# Запуск контейнера (проброс порта 8080 -> 5000)
-docker run -p 5000:8080 credit-calculator
-
-# Открыть в браузере:
-http://localhost:5000
-
-### (Опционально) Запуск через Docker Compose
+# Запуск контейнера (порт 8080 внутри → 8181 снаружи)
+docker run -p 8181:8080 credit-calculator
 ```
+
+Открыть в браузере:  
+http://localhost:8181
+
+---
 
 ### Запуск через Docker Compose
 
 ```sh
-# Сборка и запуск контейнера
 docker-compose up --build
-
-# Приложение будет доступно по адресу:
-http://localhost:8181
 ```
 
-## Структура каталогов
+Приложение будет доступно по адресу:  
+http://localhost:8181
 
-- `Controllers/` — контроллеры MVC
-- `Logic/` — бизнес-логика (интерфейсы и сервисы)
-- `Models/` — модели и DTO
-- `Views/` — Razor Views
-- `wwwroot/` — статические файлы (CSS, JS)
+---
+
+## Тестирование
+
+Проект `CreditCalculator.Tests` содержит модульные тесты для проверки корректности расчётов по двум стратегиям:
+
+- `AnnualScheduleCalculator` — ежемесячный аннуитетный график
+- `DailyScheduleCalculator` — дневной аннуитетный график с шагом
+
+### Запуск тестов локально
+
+```sh
+dotnet test
+```
+
+---
+
+### Запуск тестов в Docker
+
+```sh
+# Сборка и запуск контейнера с тестами
+docker build -t credit-calculator-tests -f CreditCalculator.Tests/Dockerfile .
+
+# Тесты выполнятся на этапе RUN и выведут лог в консоль
+```
+
+---
+
+### Запуск через Docker Compose
+
+```sh
+# Сборка и запуск только тестов
+docker compose --profile test up --build tests
+```
+
 
 ## Авторы
 

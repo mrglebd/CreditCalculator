@@ -1,3 +1,4 @@
+using CreditCalculator.Helpers;
 using CreditCalculator.Models;
 
 namespace CreditCalculator.Services
@@ -15,19 +16,18 @@ namespace CreditCalculator.Services
         {
             decimal loanAmount = Math.Round(input.LoanAmount, 2);
             int months = input.LoanTermMonths!.Value;
-            double annualRate = input.AnnualInterestRate!.Value;
-            double monthlyRate = annualRate / 12 / 100;
+            decimal annualRate = input.AnnualInterestRate!.Value;
+            decimal monthlyRate = annualRate / 12m / 100m;
 
-            decimal monthlyPayment = loanAmount *
-                                     (decimal)(monthlyRate * Math.Pow(1 + monthlyRate, months) /
-                                               (Math.Pow(1 + monthlyRate, months) - 1));
+            decimal pow = FinanceHelper.Pow(1 + monthlyRate, months);
+            decimal monthlyPayment = loanAmount * monthlyRate * pow / (pow - 1);
 
             List<PaymentInfo> payments = new List<PaymentInfo>();
             decimal remainingDebt = loanAmount;
 
             for (int i = 1; i <= months; i++)
             {
-                decimal interest = remainingDebt * (decimal)monthlyRate;
+                decimal interest = remainingDebt * monthlyRate;
                 decimal principal = monthlyPayment - interest;
                 remainingDebt -= principal;
 

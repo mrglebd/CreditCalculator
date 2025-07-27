@@ -1,9 +1,16 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  creditcalculator:
+  app:
     build:
       context: .
       dockerfile: CreditCalculator/Dockerfile
     ports:
       - "8181:8080"
+
+  tests:
+    build:
+      context: .
+      dockerfile: CreditCalculator.Tests/Dockerfile
+    profiles:
+      - test
