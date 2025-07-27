@@ -13,10 +13,12 @@ builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
 });
-builder.Services.AddScoped<ICreditCalculator, CreditCalculator.Services.CreditCalculator>();
-builder.Services.AddScoped<IRepaymentScheduleCalculator, AnnualScheduleCalculator>();
-builder.Services.AddScoped<IRepaymentScheduleCalculator, DailyScheduleCalculator>();
+// Регистрация стратегий как конкретные типы
+builder.Services.AddScoped<AnnualScheduleCalculator>();
+builder.Services.AddScoped<DailyScheduleCalculator>();
 
+// Регистрация основного сервиса
+builder.Services.AddScoped<ICreditCalculator, CreditCalculator.Services.CreditCalculator>();
 
 var app = builder.Build();
 

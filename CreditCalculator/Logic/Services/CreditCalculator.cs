@@ -4,11 +4,13 @@ namespace CreditCalculator.Services
 {
     public class CreditCalculator : ICreditCalculator
     {
-        private readonly IEnumerable<IRepaymentScheduleCalculator> _strategies;
+        private readonly AnnualScheduleCalculator _annualCalculator;
+        private readonly DailyScheduleCalculator _dailyCalculator;
 
-        public CreditCalculator(IEnumerable<IRepaymentScheduleCalculator> strategies)
+        public CreditCalculator(AnnualScheduleCalculator annualCalculator, DailyScheduleCalculator dailyCalculator)
         {
-            _strategies = strategies;
+            _annualCalculator = annualCalculator;
+            _dailyCalculator = dailyCalculator;
         }
 
         /// <summary>
@@ -19,9 +21,12 @@ namespace CreditCalculator.Services
         /// <exception cref="InvalidOperationException">Выбрана неподдерживаемая стратегия расчета</exception>
         public ResultViewModel CalculateSchedule(CreditInputModel input)
         {
-            var strategy = _strategies.FirstOrDefault(s => s.RateType == input.RateType);
-            if (strategy == null)
-                throw new InvalidOperationException("Не найдена подходящая стратегия расчета");
+            IRepaymentScheduleCalculator strategy = input.RateType switch
+            {
+                InterestRateType.Annual => _annualCalculator,
+                InterestRateType.Daily => _dailyCalculator,
+                _ => throw new InvalidOperationException($"Неподдерживаемый тип ставки: {input.RateType}")
+            };
 
             return strategy.Calculate(input);
         }

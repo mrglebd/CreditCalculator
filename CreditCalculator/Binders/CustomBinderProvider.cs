@@ -9,11 +9,6 @@ public class CustomBinderProvider : IModelBinderProvider
             return new InvariantDecimalModelBinder();
         }
 
-        if (context.Metadata.ModelType == typeof(double) || context.Metadata.ModelType == typeof(double?))
-        {
-            return new InvariantDoubleModelBinder();
-        }
-
         return null!;
     }
 }
